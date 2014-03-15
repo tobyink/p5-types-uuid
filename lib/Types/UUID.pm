@@ -5,7 +5,7 @@ use warnings;
 package Types::UUID;
 
 our $AUTHORITY = 'cpan:TOBYINK';
-our $VERSION   = '0.001';
+our $VERSION   = '0.002';
 
 use Type::Library -base;
 use Type::Tiny ();

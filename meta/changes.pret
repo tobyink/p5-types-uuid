@@ -4,3 +4,6 @@
 	issued  2014-03-15;
 	label   "Initial release".
 
+`Types-UUID 0.002 cpan:TOBYINK`
+	issued  2014-03-15;
+	changeset [ item "Fix minor pod formatting issue."^^Documentation ].
