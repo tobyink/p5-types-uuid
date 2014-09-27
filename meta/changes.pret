@@ -11,3 +11,7 @@
 `Types-UUID 0.003 cpan:TOBYINK`
 	issued  2014-09-27;
 	changeset [ item "Provide `Uuid->generator` and `Uuid->generate` convenience methods."^^Addition ].
+
+`Types-UUID 0.004 cpan:TOBYINK`
+	issued  2014-09-27;
+	changeset [ item "Update example."^^Documentation ].
