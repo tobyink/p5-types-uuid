@@ -14,16 +14,33 @@ use UUID::Tiny qw( :std );
 
 our @EXPORT = qw( Uuid );
 
+{
+	package #
+		Types::UUID::_Constraint;
+	our @ISA = "Type::Tiny";
+	sub generate {
+		shift;
+		UUID::Tiny::create_uuid_as_string(@_);
+	}
+	sub generator {
+		shift;
+		my @args = @_;
+		sub { UUID::Tiny::create_uuid_as_string(@args) }
+	}
+}
+
 my $type = __PACKAGE__->add_type(
-	name       => 'Uuid',
-	parent     => Str,
-	constraint => \&is_uuid_string,
-	inlined    => sub {
-		return (
-			Str->inline_check($_),
-			"UUID::Tiny::is_uuid_string($_)",
-		);
-	},
+	'Types::UUID::_Constraint'->new(
+		name       => 'Uuid',
+		parent     => Str,
+		constraint => \&is_uuid_string,
+		inlined    => sub {
+			return (
+				Str->inline_check($_),
+				"UUID::Tiny::is_uuid_string($_)",
+			);
+		},
+	),
 );
 
 $type->coercion->add_type_coercions(
@@ -33,8 +50,6 @@ $type->coercion->add_type_coercions(
 );
 
 $type->coercion->freeze;
-
-1;
 
 __END__
 
@@ -56,8 +71,8 @@ Types::UUID - type constraints for UUIDs
    has identifier => (
       is      => 'lazy',
       isa     => Uuid,
-      coerce  => Uuid->coercion,
-      builder => sub { undef },
+      coerce  => 1,
+      builder => Uuid->generator,
    );
 
 =head1 DESCRIPTION
@@ -81,6 +96,25 @@ This constraint has coercions from C<Undef> (generates a new UUID),
 C<Str> (fixes slightly broken-looking UUIDs, adding missing dashes;
 also accepts base-64-encoded UUIDs) and L<URI> objects using the
 C<< urn:uuid: >> URI scheme.
+
+=back
+
+=head2 Methods
+
+The C<Uuid> type constraint is actually blessed into a subclass of
+L<Type::Tiny>, and provides an aditional method:
+
+=over
+
+=item C<< Uuid->generate >>
+
+Generates a new UUID. C<< Uuid->coerce(undef) >> would also work, but
+looks a little odd.
+
+=item C<< Uuid->generator >>
+
+Returns a coderef which generates a new UUID. For an example usage, see
+the L</SYNOPSIS>.
 
 =back
 

@@ -53,5 +53,8 @@ SKIP: {
 	is(lc($from_obj), 'f81d4fae-7dec-11d0-a765-00a0c91e6bf6', '... and is the expected value');
 }
 
+should_pass( Uuid->generate, Uuid, 'Uuid->generate' );
+should_pass( Uuid->generator->(), Uuid, 'Uuid->generator' );
+
 done_testing;
 
