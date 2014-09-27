@@ -1,18 +1,15 @@
-use 5.010;
-use strict;
-use warnings;
+use 5.014;
 
-{
-	package FroobleStick;
+package FroobleStick {
 	
-	use Moo;
+	use Moo 1.006000;
 	use Types::UUID;
 	
 	has identifier => (
 		is      => 'lazy',
 		isa     => Uuid,
-		coerce  => Uuid->coercion,
-		builder => sub { undef },
+		coerce  => 1,
+		builder => Uuid->generator,
 	);
 }
 
