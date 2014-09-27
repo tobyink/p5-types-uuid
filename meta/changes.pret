@@ -7,3 +7,7 @@
 `Types-UUID 0.002 cpan:TOBYINK`
 	issued  2014-03-15;
 	changeset [ item "Fix minor pod formatting issue."^^Documentation ].
+
+`Types-UUID 0.003 cpan:TOBYINK`
+	issued  2014-09-27;
+	changeset [ item "Provide `Uuid->generator` and `Uuid->generate` convenience methods."^^Addition ].
